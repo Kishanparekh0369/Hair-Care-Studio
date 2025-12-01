@@ -48,6 +48,8 @@
             background: linear-gradient(135deg, #fff, var(--cream-color));
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
         }
 
         .service-card::before {
@@ -230,6 +232,7 @@
             padding: 5px 15px;
             border-radius: 25px;
             display: inline-block;
+            transition: all 0.3s ease;
         }
 
         .multi-select {
@@ -329,8 +332,29 @@
             }
         }
 
-        .service-card {
-            animation: fadeInUp 0.6s ease forwards;
+        /* Staggered animation for service cards */
+        .service-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .service-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .service-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .service-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .service-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .service-card:nth-child(6) {
+            animation-delay: 0.6s;
         }
 
         /* Responsive improvements */
@@ -366,6 +390,7 @@
         /* Service category styling */
         .service-category {
             margin-bottom: 3rem;
+            position: relative;
         }
 
         .category-title {
@@ -386,28 +411,96 @@
             height: 3px;
             background: linear-gradient(90deg, var(--gold-color), var(--theme-color));
         }
-
-        .service-image {
+        .service-img-container {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 180px;
+            overflow: hidden;
             border-radius: 10px 10px 0 0;
+            position: relative;
         }
 
-        /* Hero image styling */
+        .service-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .service-img-container:hover .service-img {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+
+        .service-img-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-img-container:hover::after {
+            opacity: 1;
+        }
+
+        .service-card:hover .service-price {
+            background: linear-gradient(135deg, var(--theme-color), var(--gold-color));
+            color: white;
+            transform: scale(1.05);
+        }
+        .hero-image-box {
+            position: relative;
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+        }
+
         .hero-image {
             max-width: 100%;
             border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             border: 3px solid var(--gold-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Service image styling */
-        .service-img {
+        .hero-image-box:hover .hero-image {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--theme-color);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        .hero-image-label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--gold-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-image-label::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--theme-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .hero-image-box:hover .hero-image-label {
+            color: var(--theme-color);
+            transform: translateY(5px);
+        }
+
+        .hero-image-box:hover .hero-image-label::after {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
         }
 
         /* Hero images container */
@@ -418,16 +511,59 @@
             align-items: center;
         }
 
-        .hero-image-box {
-            text-align: center;
-            flex: 1;
+        /* Category highlight animation */
+        .category-highlight {
+            animation: highlightCategory 3s ease;
         }
 
-        .hero-image-label {
-            margin-top: 10px;
-            font-weight: bold;
-            color: var(--gold-color);
-            font-size: 1.2rem;
+        @keyframes highlightCategory {
+            0% {
+                background-color: rgba(139, 69, 19, 0);
+                padding: 0;
+                border-radius: 0;
+            }
+
+            20% {
+                background-color: rgba(139, 69, 19, 0.15);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            }
+
+            80% {
+                background-color: rgba(139, 69, 19, 0.15);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            }
+
+            100% {
+                background-color: rgba(139, 69, 19, 0);
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* Smooth scroll offset for fixed navbar */
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        /* Button hover effects enhancement */
+        .btn-outline-light:hover {
+            background-color: var(--gold-color);
+            border-color: var(--gold-color);
+            color: var(--dark-brown);
+        }
+
+        /* Enhanced card hover effects */
+        .service-card .card-body {
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .card-body {
+            background: linear-gradient(135deg, #fff, #f8f0e8);
         }
     </style>
 </head>
@@ -496,14 +632,13 @@
                 </div>
                 <div class="col-lg-6 text-center mt-5 mt-lg-0">
                     <div class="hero-images-container">
-                        <div class="hero-image-box">
+                        <div class="hero-image-box" onclick="scrollToCategory('womens-services')">
                             <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
-                                alt="Women's Haircut" class="hero-image">
+                                alt="Women's Services" class="hero-image">
                             <div class="hero-image-label">Women's Services</div>
-
                         </div>
-                        <div class="hero-image-box">
-                            <img src="IMAGES/Beard-Trim.jpg" alt="Men's Haircut" class="hero-image">
+                        <div class="hero-image-box" onclick="scrollToCategory('mens-services')">
+                            <img src="IMAGES/Beard-Trim.jpg" alt="Men's Services" class="hero-image">
                             <div class="hero-image-label">Men's Services</div>
                         </div>
                     </div>
@@ -523,7 +658,7 @@
             </div>
 
             <!-- Men's Services -->
-            <div class="service-category">
+            <div class="service-category" id="mens-services">
                 <h3 class="category-title">Men's Services</h3>
                 <div class="services-container" id="mens-services-container">
                     <!-- Men's services will be dynamically populated by JavaScript -->
@@ -531,7 +666,7 @@
             </div>
 
             <!-- Women's Services -->
-            <div class="service-category">
+            <div class="service-category" id="womens-services">
                 <h3 class="category-title">Women's Services</h3>
                 <div class="services-container" id="womens-services-container">
                     <!-- Women's services will be dynamically populated by JavaScript -->
@@ -759,42 +894,48 @@
                 name: "Men's Classic Haircut",
                 description: "Professional haircut with precision styling and finishing",
                 price: 100,
-                image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+                image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80",
+                category: "mens"
             },
             {
                 id: 2,
                 name: "Beard Trim & Styling",
                 description: "Expert beard trimming and shaping for a polished look",
                 price: 80,
-                image: "IMAGES/Beard-Trim.jpg"
+                image: "IMAGES/Beard-Trim.jpg",
+                category: "mens"
             },
             {
                 id: 3,
                 name: "Men's Hair Coloring",
                 description: "Professional hair coloring with premium products",
-                price: "150 To ₹250",
-                image: "IMAGES/color.jpg"
+                price: "150 - ₹250",
+                image: "IMAGES/color.jpg",
+                category: "mens"
             },
             {
                 id: 4,
                 name: "Men's Facial Treatment",
                 description: "Deep cleansing facial for men with premium products",
                 price: 300,
-                image: "IMAGES/Men's Facial Treatment.jpg"
+                image: "IMAGES/Men's Facial Treatment.jpg",
+                category: "mens"
             },
             {
                 id: 5,
                 name: "Men's Head Massage",
                 description: "Relaxing head massage with essential oils",
                 price: 100,
-                image: "IMAGES/head.jpg"
+                image: "IMAGES/head.jpg",
+                category: "mens"
             },
             {
                 id: 6,
                 name: "Men's Hair Spa",
                 description: "Revitalizing hair spa treatment for men",
                 price: 300,
-                image: "IMAGES/hairspa.jpeg"
+                image: "IMAGES/hairspa.jpeg",
+                category: "mens"
             }
         ];
 
@@ -803,43 +944,49 @@
                 id: 7,
                 name: "Women's Haircut & Styling",
                 description: "Premium haircut with professional styling and finishing",
-                price: "350 To ₹500",
-                image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
+                price: "350 - ₹500",
+                image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80",
+                category: "womens"
             },
             {
                 id: 8,
                 name: "Women's Hair Coloring",
                 description: "Expert hair coloring with international brands",
-                price: "1000 To ₹2500",
-                image: "IMAGES/haircolorw.jpg"
+                price: "1000 - ₹2500",
+                image: "IMAGES/haircolorw.jpg",
+                category: "womens"
             },
             {
                 id: 9,
                 name: "Women's Hair Spa",
                 description: "Luxury hair spa treatment for deep conditioning",
-                price: "500 To ₹2500",
-                image: "IMAGES/hairspaw.jpg"
+                price: "500 - ₹2500",
+                image: "IMAGES/hairspaw.jpg",
+                category: "womens"
             },
             {
                 id: 10,
                 name: "Bridal Hair & Makeup",
                 description: "Complete bridal hair and makeup package",
-                price: "10000 To ₹25000",
-                image: "IMAGES/one.jpg"
+                price: "10000 - ₹25000",
+                image: "IMAGES/one.jpg",
+                category: "womens"
             },
             {
                 id: 11,
                 name: "Body Treatment",
                 description: "A refreshing body treatment that smoothens and hydrates your skin.",
-                price: "1000 To ₹3000",
-                image: "IMAGES/3.jpg"
+                price: "1000 - ₹3000",
+                image: "IMAGES/3.jpg",
+                category: "womens"
             },
             {
                 id: 12,
                 name: "FACIALS || Waxing || Threading",
                 description: "FACIALS - ₹500 To ₹3500, Waxing - ₹100 To ₹500 , Threading - ₹100 To ₹300",
                 price: "Mention in Description",
-                image: "IMAGES/2.jpg"
+                image: "IMAGES/2.jpg",
+                category: "womens"
             }
         ];
 
@@ -853,6 +1000,45 @@
         const selectedServicesList = document.getElementById('selected-services-list');
 
         let selectedServices = [];
+
+        // Function to scroll to category with smooth animation
+        function scrollToCategory(categoryId) {
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+
+            // Close mobile menu if open
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                navbarToggler.click();
+            }
+
+            // Scroll to the category
+            const targetElement = document.getElementById(categoryId);
+            if (targetElement) {
+                // Add a small delay for better UX
+                setTimeout(() => {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // Add highlight animation
+                    highlightCategory(categoryId);
+                }, 100);
+            }
+        }
+
+        // Function to highlight the category
+        function highlightCategory(categoryId) {
+            const categoryElement = document.getElementById(categoryId);
+            if (categoryElement) {
+                categoryElement.classList.add('category-highlight');
+
+                // Remove highlight class after animation completes
+                setTimeout(() => {
+                    categoryElement.classList.remove('category-highlight');
+                }, 3000);
+            }
+        }
 
         // Custom navigation handler
         function setupNavigation() {
@@ -898,7 +1084,9 @@
                 serviceCard.className = 'service-card';
                 serviceCard.innerHTML = `
                     <div class="premium-badge">Premium</div>
-                    <img src="${service.image}" alt="${service.name}" class="service-img">
+                    <div class="service-img-container">
+                        <img src="${service.image}" alt="${service.name}" class="service-img">
+                    </div>
                     <div class="card-body text-center p-4">
                         <h5 class="card-title fw-bold theme-text">${service.name}</h5>
                         <p class="card-text text-muted">${service.description}</p>
@@ -929,7 +1117,9 @@
                 serviceCard.className = 'service-card';
                 serviceCard.innerHTML = `
                     <div class="premium-badge">Premium</div>
-                    <img src="${service.image}" alt="${service.name}" class="service-img">
+                    <div class="service-img-container">
+                        <img src="${service.image}" alt="${service.name}" class="service-img">
+                    </div>
                     <div class="card-body text-center p-4">
                         <h5 class="card-title fw-bold theme-text">${service.name}</h5>
                         <p class="card-text text-muted">${service.description}</p>
@@ -1092,7 +1282,12 @@
                 mobile: document.getElementById('mobile').value.trim(),
                 services: selectedServices.map(s => s.name).join(', '),
                 servicesWithPrices: selectedServices.map(s => `${s.name} - ₹${s.price}`).join('\n'),
-                totalAmount: selectedServices.reduce((sum, service) => sum + service.price, 0),
+                totalAmount: selectedServices.reduce((sum, service) => {
+                    if (typeof service.price === 'string') {
+                        return sum;
+                    }
+                    return sum + service.price;
+                }, 0),
                 date: document.getElementById('date').value,
                 message: document.getElementById('message').value.trim() || 'No special requirements'
             };
@@ -1156,6 +1351,18 @@ ${formData.servicesWithPrices}
             inputs.forEach(input => {
                 input.addEventListener('blur', function () {
                     validateForm();
+                });
+            });
+
+            // Handle hero image clicks
+            document.querySelectorAll('.hero-image-box').forEach(box => {
+                box.addEventListener('click', function () {
+                    const label = this.querySelector('.hero-image-label').textContent;
+                    if (label.includes("Men's")) {
+                        scrollToCategory('mens-services');
+                    } else if (label.includes("Women's")) {
+                        scrollToCategory('womens-services');
+                    }
                 });
             });
         });
